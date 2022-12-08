@@ -20,8 +20,11 @@ def add_customer(request):
             # if a GET (or any other method) we'll create a blank form
     else:
         form = CustomerForm()
-
-    return render(request, 'puradata/add_data.html', {'form': form})
+    context = {
+        'form': form,
+        'page_title': 'Cliente'
+    }
+    return render(request, 'puradata/add_data.html', context)
 
 
 def add_professional(request):
@@ -35,8 +38,11 @@ def add_professional(request):
             # if a GET (or any other method) we'll create a blank form
     else:
         form = ProfessionalForm()
-
-    return render(request, 'puradata/add_data.html', {'form': form})
+    context = {
+        'form': form,
+        'page_title': 'Profesional'
+    }
+    return render(request, 'puradata/add_data.html', context)
 
 
 def add_category(request):
@@ -50,8 +56,11 @@ def add_category(request):
             # if a GET (or any other method) we'll create a blank form
     else:
         form = CategoryForm()
-
-    return render(request, 'puradata/add_data.html', {'form': form})
+    context = {
+        'form': form,
+        'page_title': 'Categoria'
+    }
+    return render(request, 'puradata/add_data.html', context)
 
 
 def add_professional_payment(request):
@@ -65,8 +74,11 @@ def add_professional_payment(request):
             # if a GET (or any other method) we'll create a blank form
     else:
         form = ProfessionalPaymentForm()
-
-    return render(request, 'puradata/add_data.html', {'form': form})
+    context = {
+        'form': form,
+        'page_title': 'Pago de Profesional'
+    }
+    return render(request, 'puradata/add_data.html', context)
 
 
 def add_order(request):
@@ -80,8 +92,11 @@ def add_order(request):
             # if a GET (or any other method) we'll create a blank form
     else:
         form = OrderForm()
-
-    return render(request, 'puradata/add_data.html', {'form': form})
+    context = {
+        'form': form,
+        'page_title': 'Orden de Compra'
+    }
+    return render(request, 'puradata/add_data.html', context)
 
 
 def add_product(request):
@@ -95,5 +110,8 @@ def add_product(request):
             # if a GET (or any other method) we'll create a blank form
     else:
         form = ProductForm()
-
-    return render(request, 'puradata/add_data.html', {'form': form})
+    context = {
+        'form': form,
+        'page_title': 'Producto'
+    }
+    return render(request, 'puradata/add_data.html', context)
