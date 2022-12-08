@@ -35,15 +35,20 @@ class Category(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.RESTRICT)
     created = models.DateTimeField(auto_now_add=True)
-    invoiced = models.BooleanField()  # Para la facturacion
+    facturado = models.BooleanField()  # Para la facturacion
 
     def __str__(self):
         return f'{str(self.id)} - {self.created}'
 
 
-class Orderline(models.Model):
-    product = models.CharField(max_length=200)
+class Product(models.Model):
+    name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+class Orderline(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     professional = models.ForeignKey(Professional, on_delete=models.RESTRICT)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     cash_payment = MoneyField(

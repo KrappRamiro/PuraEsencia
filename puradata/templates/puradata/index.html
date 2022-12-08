@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
-   </head>
-   <body>AA</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+   ESTO ES EL HOME
+   <hr>
+   <div>
+      <a href="{% url 'puradata:add_customer' %}">Añadir Cliente</a>
+   </div>
+   <div>
+      <a href="{% url 'puradata:add_order' %}">Añadir Orden de Pago</a>
+   </div>
+   <div>
+      <a href="{% url 'puradata:add_product' %}">Añadir Producto</a>
+   </div>
+   <div>
+      <a href="{% url 'puradata:add_category' %}">Añadir Categoria</a>
+   </div>
+   <div>
+      <a href="{% url 'puradata:add_professional' %}">Añadir Profesional</a>
+   </div>
+   <div>
+      <a href="{% url 'puradata:add_professional_payment' %}">Añadir Pago hacia profesional</a>
+   </div>
+{% endblock content %}
