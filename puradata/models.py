@@ -34,8 +34,9 @@ class Category(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.RESTRICT)
+    fecha = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
-    facturado = models.BooleanField()  # Para la facturacion
+    facturado = models.BooleanField(default=False)  # Para la facturacion
 
     def __str__(self):
         return f'{str(self.id)} - {self.created}'
@@ -46,15 +47,16 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Orderline(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     professional = models.ForeignKey(Professional, on_delete=models.RESTRICT)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    cash_payment = MoneyField(
-        max_digits=10, decimal_places=2, default_currency='ARS', null=True)
-    mercado_pago_payment = MoneyField(
-        max_digits=10, decimal_places=2, default_currency='ARS', null=True)
+    cash_payment = models.DecimalField(max_digits=10, decimal_places=2)
+    mercado_pago_payment = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return str(self.id)

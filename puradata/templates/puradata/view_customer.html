@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+   <h1>{{ customer.name }}</h1>
+   <hr>
+   <a href="{% url 'puradata:add_order' customer.id %}">Añadir <b> Orden de pago </b>
+   </a>
+{% endblock content %}
