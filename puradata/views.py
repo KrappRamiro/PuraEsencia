@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import formset_factory
 
 from .models import Order, Orderline, Category, Professional, Customer, Debt, ProfessionalPayment
-from .forms import CustomerForm, ProfessionalPaymentForm, CategoryForm, ProfessionalForm, OrderlineForm, ProductForm
+from .forms import CustomerForm, ProfessionalPaymentForm, CategoryForm, ProfessionalForm, OrderlineForm, ProductForm, OrderForm
 # Create your views here.
 
 
@@ -58,6 +58,12 @@ def view_professional_payments(request):
         'professional_payments': professional_payments,
     }
     return render(request, 'puradata/view_professional_payments.html', context)
+
+
+def view_orders(request):
+    orders = Order.objects.all().order_by('datetime')
+    context = {'orders': orders}
+    return render(request, 'puradata/view_orders.html', context)
 
 # endregion data_visualization
 
@@ -136,26 +142,32 @@ def add_professional_payment(request):
     return render(request, 'puradata/add_data.html', context)
 
 
-def add_order(request, pk):
+def add_order(request):
     '''
     Add order to an specific customer
     This whole implementation needs to be redone, because this code is awful
     '''
-    # First we get the customer
-    customer = get_object_or_404(Customer, id=pk)
-    OrderlineFormSet = formset_factory(OrderlineForm, extra=3)
-    formset = OrderlineFormSet()
+    OrderlineFormSet = formset_factory(OrderlineForm, extra=10)
+    orderline_formset = OrderlineFormSet()
+    order_form = OrderForm()
     if request.method == 'POST':
-        formset = OrderlineFormSet(request.POST)
-        if formset.is_valid():
+        orderline_formset = OrderlineFormSet(request.POST)
+        order_form = OrderForm(request.POST)
+        if orderline_formset.is_valid() and order_form.is_valid():
             # Create a new order, and assign the customer to it
-            new_order = Order.objects.create(customer=customer)
-            for form in formset:
+            order_form = order_form.cleaned_data
+            print(order_form)
+            new_order = Order.objects.create(
+                customer=order_form['customer'],
+                datetime=order_form['datetime'],
+            )
+            # Create the orderlines and assign it to the order
+            for form in orderline_formset:
                 form = form.cleaned_data
                 print(form)
-                # When the user inputs nothing on one of the forms, it exits the loop
+                # When the user inputs nothing on one of the forms, it skips
                 if form == {}:
-                    break
+                    continue
                 # Create a new orderline for each form and assing it to the order
                 new_orderline = Orderline.objects.create(
                     order=new_order,
@@ -165,11 +177,16 @@ def add_order(request, pk):
                     mercado_pago_payment=form['mercado_pago_payment']
                 )
         else:
-            print("The formset was not valid displaying important info:")
+            print(
+                "The orderline_formset or the order_form was not valid displaying important info:")
+            print("orderline_formset info:")
             print(request.POST)
-            print(f"Errors: {formset.errors}")
-            print(f"Is it bound?: {formset.is_bound}")
-    context = {'customer': customer, 'formset': formset}
+            print(f"Errors: {orderline_formset.errors}")
+            print(f"Is it bound?: {orderline_formset.is_bound}")
+            print("\norder_form info:")
+        return redirect('puradata:home')
+    context = {'orderline_formset': orderline_formset,
+               'order_form': order_form}
     return render(request, 'puradata/add_order.html', context)
 
 

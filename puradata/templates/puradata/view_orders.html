@@ -1,4 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-   {{ data }}
+   {% for order in orders %}
+      <h3>Orden N°:{{ order.id }}</h3>
+      <h4>Cliente: {{ order.customer.name }}</h4>
+      <h5>Fecha: {{ order.datetime }}</h5>
+      {% for orderline in order.orderline_set.all %}
+         <ul>
+            <b>
+               <small>Orderline N°{{ orderline.id }}</small>
+            </b>
+            <li>Producto: {{ orderline.product }}</li>
+            {% if orderline.cash_payment != 0 %}<li>Efectivo: {{ orderline.cash_payment }}</li>{% endif %}
+            {% if orderline.mercado_pago_payment != 0 %}<li>Mercado Pago: {{ orderline.mercado_pago_payment }}</li>{% endif %}
+            {% if orderline.cash_payment == 0 and orderline.mercado_pago_payment == 0 %}<li>No hubo pago</li>{% endif %}
+         </ul>
+      {% endfor %}
+      <hr>
+   {% endfor %}
 {% endblock content %}

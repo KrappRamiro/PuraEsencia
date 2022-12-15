@@ -1,20 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-   ESTO ES EL HOME
-   <hr>
-   <div>
-      <a href="{% url 'puradata:add_customer' %}">Añadir Cliente</a>
-   </div>
-   <div>
-      <a href="{% url 'puradata:add_product' %}">Añadir Producto</a>
-   </div>
-   <div>
-      <a href="{% url 'puradata:add_category' %}">Añadir Categoria</a>
-   </div>
-   <div>
-      <a href="{% url 'puradata:add_professional' %}">Añadir Profesional</a>
-   </div>
-   <div>
-      <a href="{% url 'puradata:add_professional_payment' %}">Añadir Pago hacia profesional</a>
+   <div class="row">
+      <div class="col">
+         <h1>Añadir Cosas</h1>
+         <div>
+            <a href="{% url 'puradata:add_order' %}">Añadir Orden de pago</a>
+         </div>
+         <div>
+            <a href="{% url 'puradata:add_customer' %}">Añadir Cliente</a>
+         </div>
+         <div>
+            <a href="{% url 'puradata:add_product' %}">Añadir Producto</a>
+         </div>
+         <div>
+            <a href="{% url 'puradata:add_category' %}">Añadir Categoria</a>
+         </div>
+         <div>
+            <a href="{% url 'puradata:add_professional' %}">Añadir Profesional</a>
+         </div>
+         <div>
+            <a href="{% url 'puradata:add_professional_payment' %}">Añadir Pago hacia profesional</a>
+         </div>
+      </div>
+      <div class="col">
+         <div>
+            <a href="{% url 'puradata:view_orders' %}">Ver todas las ordenes de pago</a>
+         </div>
+      </div>
    </div>
 {% endblock content %}

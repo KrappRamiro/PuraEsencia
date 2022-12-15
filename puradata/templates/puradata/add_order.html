@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-   <h1>Añadir {{ page_title }}</h1>
+   <h1>Añadir Orden</h1>
    <hr>
    <form action="" method="post">
-      {{ formset.management_form }}
+      {{ orderline_formset.management_form }}
       {% csrf_token %}
       <table>
-         {% for form in formset %}{{ form }}{% endfor %}
+         {{ order_form.as_p }}
       </table>
-      <input type="submit" value="Submit">
+      {% for form in orderline_formset %}
+         {{ form }}
+         <hr>
+      {% endfor %}
+      <div class="text-center">
+         <input class="btn btn-primary m-5" type="submit" value="Submit">
+      </div>
    </form>
 {% endblock content %}
